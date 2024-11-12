@@ -63,10 +63,17 @@ impacket-wmiexec admin:password123@192.168.145.182 "ipconfig"
 
 ```
 
+Don't work
 
 
 
-## 2 - fezfezfezf
+
+# Saved Creds
+
+Windows has a runas command which allows users to run commands with the privileges of other users.
+
+This usually require the knowledge of the other user's password.
+However , Windows also allows users to save their credentials to the system, and these saved credentials can be used to bypass this requirement.
 
 
 
