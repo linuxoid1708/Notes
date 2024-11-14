@@ -72,44 +72,51 @@ echo "Apres la fonction : $global_var" # Variable globale
 
 # Variables de tableau 
 
-## resume
-
-```bash
-
-my_array[@] ou my_array[*]  Représente tous les éléments d’un tableau classique.
+## Tableau 
 
 
+**Tableau classique :** 
+
+| my_array=("v1" "v2") | Déclare un tableau classique avec deux valeurs.      |
+| -------------------- | ---------------------------------------------------- |
+| ${my_array[0]}       | Accède au 1er élément du tableau.                    |
+| ${my_array[@]}       | Affiche tous les éléments du tableau.                |
+| ${#my_array[@]}      | Retourne le nombre total d'éléments dans le tableau. |
+| ${!my_array[@]}      | Retourne tous les **index** du tableau.              |
+| unset my_array[1]    | Supprime l'élément à l'index 1.                      |
+|                      |                                                      |
+
+**Tableau associatif :**
 
 
-```
+| declare -A my_assoc_array    | Déclare un tableau associatif.                           |
+| ---------------------------- | -------------------------------------------------------- |
+| my_assoc_array["clé1"]="v1"  | Associe la clé **`clé1`** à la valeur v1                 |
+| ${my_assoc_array["clé1"]}    | Accède à la valeur associée à la clé clé1                |
+| ${!my_assoc_array[@]}        | Affiche toutes les clés du tableau associatif.           |
+| ${#my_assoc_array[@]}        | Retourne le nombre de paires clé/valeur dans le tableau. |
+| unset my_assoc_array["clé1"] | Supprime la paire clé/valeur associée à la clé clé1      |
 
 
+**Commandes liées aux Tableaux** 
 
-| my_array[@]         | Représente **tous les éléments** d’un tableau classique.           |
-| ------------------- | ------------------------------------------------------------------ |
-| my_array[*]         | Représente **tous les éléments** d’un tableau classique.           |
-| ${my_array[indice]} | Accède à un **élément spécifique** à l’**indice donné**.           |
-| ${#my_array[@]}     | Retourne le **nombre total d’éléments** dans un tableau classique. |
-| ${!my_array[@]}     | Renvoie tous les **index** ou **clés** présents dans le tableau.   |
-
-
-
-| my_array[index]           | Affecte une valeur à un index spécifique dans un tab class                    |
-| ------------------------- | ----------------------------------------------------------------------------- |
-| ${my_array[@]}            | Retourne **tous les éléments** du tableau.                                    |
-| ${my_array[*]}            | Similaire à `${my_array[@]}`. Utilisé dans certaines boucles.                 |
-| ${my_array[indice]}       | Retourne l’élément à l’index **`indice`**.                                    |
-| ${#my_array[@]}           | Donne le **nombre total** d’éléments dans un tableau classique.               |
-| ${!my_array[@]}           | Retourne tous les **index disponibles** dans le tableau classique.            |
-| unset my_array[index]     | Supprime l’élément à un index particulier.                                    |
-| declare -A my_assoc_array | Déclare un **tableau associatif** (clé/valeur).                               |
-| ${my_assoc_array[clé]}    | Accède à une valeur associée à une clé spécifique dans un tableau associatif. |
-| ${!my_assoc_array[@]}     | Renvoie toutes les **clés** dans le tableau associatif.                       |
-| ${#my_assoc_array[@]}     | Retourne le **nombre total de paires clé/valeur** dans le tableau associatif. |
-
-
-
-
+| my_array[index]           | Affecte une valeur à un index spécifique dans un tab class                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------ |
+| ${my_array[@]}            | Retourne **tous les éléments** du tableau.                                                 |
+| ${my_array[*]}            | Similaire à `${my_array[@]}`. Utilisé dans certaines boucles.                              |
+| ${my_array[indice]}       | Retourne l’élément à l’index **`indice`**.                                                 |
+| ${#my_array[@]}           | Donne le **nombre total** d’éléments dans un tableau classique.                            |
+| ${!my_array[@]}           | Retourne tous les **index disponibles** dans le tableau classique.                         |
+| unset my_array[index]     | Supprime l’élément à un index particulier.                                                 |
+| declare -A my_assoc_array | Déclare un **tableau associatif** (clé/valeur).                                            |
+| ${my_assoc_array[clé]}    | Accède à une valeur associée à une clé spécifique dans un tableau associatif.              |
+| ${!my_assoc_array[@]}     | Renvoie toutes les **clés** dans le tableau associatif.                                    |
+| ${#my_assoc_array[@]}     | Retourne le **nombre total de paires clé/valeur** dans le tableau associatif.              |
+| ${my_array[@]}            | Chaque élément est traité individuellement, idéal pour les boucles.                        |
+| ${my_array[*]}            | Retourne tous les éléments **en une seule chaîne**, séparés par l'IFS (par défaut espace). |
+| declare -a                | Déclare un **tableau classique**. Par défaut, non obligatoire pour les tableaux simples.   |
+| declare -r                | Rend une variable **en lecture seule** (immuable).                                         |
+| declare -x                | **Exporte** une variable dans l’environnement des processus enfants.                       |
 
 
 ```bash
