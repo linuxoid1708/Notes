@@ -218,3 +218,83 @@ copier_array =("${my_array[@]}") => copie le tableau
 |                 |                       |                                                                      |                                                                         |                                   |
 | :-------------: | :-------------------: | :------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------: |
 | **`{ ... ; }`** | **Bloc de commandes** | Regroupe plusieurs commandes à exécuter dans l'environnement actuel. | Exécute un ensemble de commandes dans l'environnement du shell courant. | `{ echo "Hello"; echo "World"; }` |
+
+## Opérateurs  avec [] et [[]]
+
+**Comparaison numérique**
+
+| Operateur | Siginifaction       | Utilisation avec [] | Utilisation avec [[]] |
+| --------- | ------------------- | ------------------- | --------------------- |
+| -eq       | Égal a              | [ "$a" -eq "$b" ]   | [[ "$a" -eq "$b" ]]   |
+| -ne       | Different de        | [  "$a" -ne "$b" ]  | [[ "$a" -ne "$b" ]]   |
+| -lt       | Inférieur a         | [ "$a" -lt "$b" ]   | [[ "$a" -lt "$b" ]]   |
+| -le       | Inférieur ou égal a | [ ${a} -le ${b} ]   | [[ ${a} -le ${b} ]]   |
+| -gt       | Supérieur a         | [ ${a} -gt ${b} ]   | [[ ${a} -qt ${b} ]]   |
+| -ge       | Supérieur ou égal a | [ ${a} -ge ${b} ]   | [[ ${a} -ge ${b} ]]   |
+
+**Comparaison de chaines** 
+
+```bash
+
+= # Egal à
+== # Egal a  pas suportté avec [] seuelement avec [[]]
+< # inferieur lexicographiquement => ECHAPPEMENT dans [] \<
+> # superieur lexicographiquement => ECHAPPEMENT dans [] \>
+
+```
+
+**Tests sur les chaines** 
+
+```shell
+-z Vrai si la chaine est vide [ -z "$str" ]  [[ -z "$str" ]]
+-n Vrai si la chaine n'est pas vide [ -n "$str" ] [[ -n "$str" ]]
+```
+
+**Tests sur les fichiers** 
+
+```bash
+-e Vrai sir le fichier existe [ -e "fichier" ]  [[ -e "fichier" ]]
+-f Vrai si le fichier est regulier [ -f "fichier" ] [[ -f "fichier" ]]
+-d Vrai si c'est un répertoire [ -d "repertoire" ] [[ -d "repertoire" ]]
+-L Vrai si c'est un lien symb [ -L "lien" ] [[ -L "lien"]]
+-r Vrai si le fichier est lisible [ -r "fichier" ] [[ -r "fichier" ]]
+-w Vrai si le fichier est modifiable [ -w "fichier" ] [[ -w "fichier" ]]
+-x Vrai si le fichier est exécutable [ -w "fichier" ] [[ -w "fichier" ]]
+```
+
+**Opérateurs logiques** 
+
+```bash
+-a ET logique [ "$a" -eq 1 -a "$b" -eq 2 ] sur [[]] non recommandé
+-o OU logique [ "$a" -eq 1 -o "$b" -eq 2 ] sur [[]] non recomandé
+&& ET logique [] non supporté             [[ "$a" -eq 1 && "$b" -eq 2 ]]
+```
+
+### Test avancés avec [[]] uniquement
+
+**Expressions régulières ( regex )**
+
+```bash
+str="abcd123"
+if [[ $str =~ ^[a-z]+[0-9]+$ ]];then
+	echo "La chaine correspond au pattern"
+fi
+```
+## Opérateurs  avec ()
+
+Evaluer des expressions arithmétiques 
+
+0 si expression est vrai
+1 si expression est fausse
+
+```bash
+a=5
+b=10
+
+((sum = a + b ))
+echo "somme: $sum"
+
+(( a++ ))
+echo "Valeur de a après incrémentation : $a" 
+
+```
