@@ -296,5 +296,143 @@ echo "somme: $sum"
 
 (( a++ ))
 echo "Valeur de a après incrémentation : $a" 
+```
 
+
+
+# Fonctions
+
+**Déclaration de la fonction**
+
+```bash
+ma_fonction(){
+	echo "Ceci est une fonction simple"
+}
+```
+
+**Appel de la fonction** 
+
+```bash
+ma_fonction
+```
+
+**Fonctions avec paramètres** ( pas la même portée que les arguments du script )
+
+```bash
+ma_fonction(){
+	echo "Premier paramètre : $1"
+	echo "Deuxieme paramètre : $2"
+	echo "Troisieme paramètre : $#"
+}
+ma_fonction "Bonjour" "Monde"
+
+Resultat :
+Premier paramètre : Bonjour
+Deuxieme paramètre : Monde
+Troisieme paramètre : 2
+```
+
+```bash
+#!/bin/bash 
+echo "Argument global (script) : $1" # Argument passé au script 
+
+ma_fonction() { 
+	echo "Argument dans la fonction : $1" # Argument passé à la fonction }
+}	
+ma_fonction "Bonjour"
+
+./script.sh global_arg
+
+SORTIE:
+
+Argument global (script) : global_arg
+Argument dans la fonction : Bonjour
+
+```
+
+
+Si fonction n'a pas de paramètres elle hérite des arguments globaux 
+
+**Fonction complete** 
+
+
+```bash
+#!/bin/bash
+
+# Déclaration d'une variable globale
+global_var="Je suis globale"
+
+ma_fonction_complexe() {
+    # Déclaration de variables locales à partir des arguments de la fonction
+    local arg1=$1
+    local arg2=$2
+    local -n tableau=$3  # Utilisation de 'nameref' pour manipuler un tableau global passé par référence
+    local assoc_key=$4   # Argument pour accéder à une clé du tableau associatif
+    local result
+
+    echo "=== Fonction Complexe ==="
+    echo "Argument 1 (local) : $arg1"
+    echo "Argument 2 (local) : $arg2"
+
+    # Afficher les éléments du tableau passé
+    echo "Éléments du tableau passé :"
+    for element in "${tableau[@]}"; do
+        echo " - $element"
+    done
+
+    # Utilisation d'un tableau associatif local
+    declare -A assoc_array
+    assoc_array["clé1"]="valeur1"
+    assoc_array["clé2"]="valeur2"
+
+    echo "Valeur associée à $assoc_key : ${assoc_array[$assoc_key]}"
+
+    # Modifier la variable globale dans la fonction
+    global_var="Modifiée dans la fonction"
+
+    # Subshell pour un répertoire temporaire
+    (
+        cd /tmp
+        echo "Dans un subshell : $(pwd)"
+    )
+    echo "Après le subshell : $(pwd)"
+
+    # Utilisation d'une boucle while
+    echo "Boucle while : Affichage de 3 nombres"
+    local i=1
+    while (( i <= 3 )); do
+        echo "Nombre : $i"
+        ((i++))
+    done
+
+    # Utilisation de conditions if/elif/else
+    if [ "$arg1" -eq "$arg2" ]; then
+        echo "Les deux arguments sont égaux"
+    elif [ "$arg1" -gt "$arg2" ]; then
+        echo "Le premier argument est plus grand que le deuxième"
+    else
+        echo "Le premier argument est plus petit que le deuxième"
+    fi
+
+    # Structure case
+    case $arg1 in
+        1) echo "Argument 1 est 1" ;;
+        2) echo "Argument 1 est 2" ;;
+        *) echo "Argument 1 est autre chose" ;;
+    esac
+
+    # Retourner une valeur complexe (via echo ou variable globale)
+    result="Résultat calculé dans la fonction"
+    echo "$result"
+}
+
+# Appel de la fonction avec différents paramètres
+tableau_exemple=("valeur1" "valeur2" "valeur3")
+
+# Appel de la fonction et récupération des valeurs
+fonction_result=$(ma_fonction_complexe 1 3 tableau_exemple "clé1")
+echo "Retour de la fonction : $fonction_result"
+
+# Vérifier la modification de la variable globale
+echo "Variable globale après fonction : $global_var"
 ```
