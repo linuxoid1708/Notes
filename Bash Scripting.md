@@ -192,3 +192,29 @@ unset my_array[1]                => supprime un element
 unset my_array                   => supprime le tableau
 copier_array =("${my_array[@]}") => copie le tableau
 ```
+
+
+# Syntaxes de conditions 
+
+| **Syntaxe** | **Nom** | **Description** | **Utilisation** | **Exemple** |     |
+| ----------- | ------- | --------------- | --------------- | ----------- | --- |
+
+|               |                         |                                                                           |                                                         |                     |
+| :-----------: | :---------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------: | :-----------------: |
+| **`[ ... ]`** | **Test simple / POSIX** | Exécute des tests conditionnels basiques (numériques, chaînes, fichiers). | Comparaisons arithmétiques, chaînes, tests de fichiers. | `[ "$a" -eq "$b" ]` |
+
+|                 |                      |                                                                                            |                                                    |                        |
+| :-------------: | :------------------: | :----------------------------------------------------------------------------------------: | :------------------------------------------------: | :--------------------: |
+| **`[[ ... ]]`** | **Test avancé Bash** | Amélioration de **`[ ]`**, supporte les expressions régulières et plus de tests complexes. | Comparaisons avancées et vérifications de chaînes. | `[[ "$a" == "abc*" ]]` |
+
+|                 |                             |                                                    |                                                                      |               |
+| :-------------: | :-------------------------: | :------------------------------------------------: | :------------------------------------------------------------------: | :-----------: |
+| **`(( ... ))`** | **Expression arithmétique** | Évalue des expressions arithmétiques (comme en C). | Calculs et tests arithmétiques sans guillemets autour des variables. | `(( a < b ))` |
+
+|               |              |                                                                                |                                                                                  |                 |
+| ------------- | :----------: | :----------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :-------------: |
+| **`( ... )`** | **Subshell** | Exécute une commande ou un ensemble de commandes dans un nouveau **subshell**. | Exécute des commandes dans un environnement isolé (indépendant du shell parent). | `(cd /tmp; ls)` |
+
+|                 |                       |                                                                      |                                                                         |                                   |
+| :-------------: | :-------------------: | :------------------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------: |
+| **`{ ... ; }`** | **Bloc de commandes** | Regroupe plusieurs commandes à exécuter dans l'environnement actuel. | Exécute un ensemble de commandes dans l'environnement du shell courant. | `{ echo "Hello"; echo "World"; }` |
